@@ -11,7 +11,7 @@
 extern crate log;
 extern crate vhost_rs;
 extern crate vhost_user_backend;
-extern crate vm_virtio;
+extern crate virtio_devices;
 
 use epoll;
 use libc::{self, EFD_NONBLOCK};
@@ -31,10 +31,10 @@ use virtio_bindings::bindings::virtio_net::*;
 use virtio_bindings::bindings::virtio_ring::*;
 use virtio_bindings::bindings::virtio_ring::__u64;
 use vm_memory::GuestMemoryMmap;
-use vm_virtio::{DeviceEventT};
-use vmm::config::{OptionParser, OptionParserError};
+use virtio_devices::{DeviceEventT};
+use option_parser::{OptionParser, OptionParserError};
 use vmm_sys_util::eventfd::EventFd;
-use vm_virtio::vsock::{VsockPacket, VsockChannel, VsockUnixBackend, VsockEpollListener};
+use virtio_devices::vsock::{VsockPacket, VsockChannel, VsockUnixBackend, VsockEpollListener};
 
 const QUEUE_SIZE: usize = 128;
 const NUM_QUEUES: usize = 2;
@@ -70,7 +70,7 @@ pub enum Error {
     /// Failed to handle unknown event.
     HandleEventUnknownEvent,
     /// Cannot create virtio-vsock backend
-    CreateVsockBackend(vm_virtio::vsock::VsockUnixError),
+    CreateVsockBackend(virtio_devices::vsock::VsockUnixError),
     /// No uds_path provided
     UDSPathParameterMissing,
     /// No guest_cid provided
