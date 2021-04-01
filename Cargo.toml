@@ -15,14 +15,18 @@ clap = { version = "2.33.1", features=["wrap_help"] }
 epoll = ">=4.0.1"
 libc = "0.2.68"
 log = "0.4.8"
-vhost_user_backend = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
+# vhost_user_backend = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
+vhost_user_backend = { path = "../cloud-hypervisor/vhost_user_backend" }
 vhost_rs = { git = "https://github.com/rust-vmm/vhost", branch = "master", package = "vhost", features = ["vhost-user-slave"] }
 virtio-bindings = "0.1.0"
 vm-memory = { version = "0.5", features = ["backend-mmap"] }
-virtio-devices = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
-vmm = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git", features = ["kvm"] }
+# virtio-devices = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
+virtio-devices = { path = "../cloud-hypervisor/virtio-devices" }
+# vmm = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git", features = ["kvm"] }
+vmm = { path = "../cloud-hypervisor/vmm", features = ["kvm"] }
 vmm-sys-util = ">=0.3.1"
-option_parser = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
+# option_parser = { git = "https://github.com/cloud-hypervisor/cloud-hypervisor.git" }
+option_parser = { path = "../cloud-hypervisor/option_parser" }
 
 [patch.crates-io]
 kvm-bindings = { git = "https://github.com/cloud-hypervisor/kvm-bindings", branch = "ch-v0.4.0", features = ["with-serde", "fam-wrappers"] }

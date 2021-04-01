@@ -8,14 +8,12 @@
 //
 // SPDX-License-Identifier: (Apache-2.0 AND BSD-3-Clause)
 
-extern crate log;
 extern crate vhost_rs;
 extern crate vhost_user_backend;
 extern crate virtio_devices;
 
 use epoll;
 use libc::{self, EFD_NONBLOCK};
-use log::*;
 use std::fmt;
 use std::io::{self};
 use std::process;
@@ -125,7 +123,7 @@ impl VhostUserVsockThread {
     }
 
     fn process_rx(&mut self, vring: &mut Vring) -> bool {
-        debug!("vsock: epoll_handler::process_rx()");
+        dbg!("vsock: epoll_handler::process_rx()");
 
         let mem = match self.mem.as_ref() {
             Some(m) => m,
@@ -147,7 +145,7 @@ impl VhostUserVsockThread {
                     }
                 }
                 Err(e) => {
-                    warn!("vsock: RX queue error: {:?}", e);
+                    dbg!("vsock: RX queue error: {:?}", e);
                     0
                 }
             };
@@ -161,7 +159,7 @@ impl VhostUserVsockThread {
         }
 
         if used_count > 0 {
-            debug!("signalling RX queue");
+            dbg!("signalling RX queue");
             vring.signal_used_queue().unwrap();
             return true;
         }
@@ -170,7 +168,7 @@ impl VhostUserVsockThread {
     }
 
     fn process_tx(&mut self, vring: &mut Vring) -> bool {
-        debug!("vsock: epoll_handler::process_tx()");
+        dbg!("vsock: epoll_handler::process_tx()");
 
         let mem = match self.mem.as_ref() {
             Some(m) => m,
@@ -183,7 +181,7 @@ impl VhostUserVsockThread {
             let pkt = match VsockPacket::from_tx_virtq_head(&avail_desc) {
                 Ok(pkt) => pkt,
                 Err(e) => {
-                    error!("vsock: error reading TX packet: {:?}", e);
+                    dbg!("vsock: error reading TX packet: {:?}", e);
                     used_desc_heads[used_count] = (avail_desc.index, 0);
                     used_count += 1;
                     continue;
@@ -204,7 +202,7 @@ impl VhostUserVsockThread {
         }
 
         if used_count > 0 {
-            debug!("signalling TX queue");
+            dbg!("signalling TX queue");
             vring.signal_used_queue().unwrap();
             return true;
         }
@@ -277,14 +275,14 @@ impl VhostUserBackend for VhostUserVsockBackend {
     }
 
     fn set_event_idx(&mut self, enabled: bool) {
-        debug!("event_idx {:?}\n", enabled);
+        dbg!("event_idx {:?}\n", enabled);
         for thread in self.threads.iter() {
             thread.lock().unwrap().event_idx = enabled;
         }
     }
 
     fn update_memory(&mut self, mem: GuestMemoryMmap) -> VhostUserBackendResult<()> {
-        debug!("update memory\n");
+        dbg!("update memory\n");
         for thread in self.threads.iter() {
             thread.lock().unwrap().mem = Some(mem.clone());
         }
@@ -302,7 +300,7 @@ impl VhostUserBackend for VhostUserVsockBackend {
         let mut vring_tx = vrings[1].write().unwrap();
         let mut work = true;
 
-        debug!("event received: {:?}", device_event);
+        dbg!("event received: {:?}", device_event);
 
         if evset != epoll::Events::EPOLLIN {
             return Err(Error::HandleEventNotEpollIn.into());
@@ -319,14 +317,14 @@ impl VhostUserBackend for VhostUserVsockBackend {
 
             match device_event {
                 RX_QUEUE_EVENT => {
-                    debug!("vsock: RX queue event");
+                    dbg!("vsock: RX queue event");
 
                     if thread.unix_backend.has_pending_rx() {
                         work |= thread.process_rx(&mut vring_rx);
                     }
                 }
                 TX_QUEUE_EVENT => {
-                    debug!("vsock: TX queue event");
+                    dbg!("vsock: TX queue event");
 
                     work |= thread.process_tx(&mut vring_tx);
                     if thread.unix_backend.has_pending_rx() {
@@ -334,10 +332,10 @@ impl VhostUserBackend for VhostUserVsockBackend {
                     }
                 }
                 EVT_QUEUE_EVENT => {
-                    debug!("vsock: EVT queue event");
+                    dbg!("vsock: EVT queue event");
                 }
                 BACKEND_EVENT => {
-                    debug!("vsock: backend event");
+                    dbg!("vsock: backend event");
                     thread.unix_backend.notify(evset);
 
                     work |= thread.process_tx(&mut vring_tx);
@@ -360,7 +358,7 @@ impl VhostUserBackend for VhostUserVsockBackend {
     }
 
     fn get_config(&self, _offset: u32, _size: u32) -> Vec<u8> {
-        debug!("get_config\n");
+        dbg!("get_config\n");
         // self.config is a statically allocated virtio_vsock_config
         let buf = unsafe {
             slice::from_raw_parts(
@@ -435,7 +433,7 @@ pub fn start_vsock_backend(backend_command: &str) {
         .unwrap(),
     ));
 
-    debug!("vsock_backend is created!\n");
+    dbg!("vsock_backend is created!\n");
 
     let listener = Listener::new(&backend_config.socket, true).unwrap();
 
@@ -446,12 +444,12 @@ pub fn start_vsock_backend(backend_command: &str) {
     )
     .unwrap();
 
-    debug!("vsock_daemon is created!\n");
+    dbg!("vsock_daemon is created!\n");
 
     let mut vring_workers = vsock_daemon.get_vring_workers();
 
     if vring_workers.len() != vsock_backend.read().unwrap().threads.len() {
-        error!("Number of vring workers must be identical to the number of backend threads");
+        dbg!("Number of vring workers must be identical to the number of backend threads");
         process::exit(1);
     }
 
@@ -470,17 +468,17 @@ pub fn start_vsock_backend(backend_command: &str) {
         process::exit(1);
     }
 
-    debug!("vsock_daemon is started!\n");
+    dbg!("vsock_daemon is started!\n");
 
     if let Err(e) = vsock_daemon.wait() {
-        error!("Error from the main thread: {:?}", e);
+        dbg!("Error from the main thread: ", e);
     }
 
-    debug!("vsock_daemon is finished!\n");
+    dbg!("vsock_daemon is finished!\n");
 
     for thread in vsock_backend.read().unwrap().threads.iter() {
         if let Err(e) = thread.lock().unwrap().kill_evt.write(1) {
-            error!("Error shutting down worker thread: {:?}", e)
+            dbg!("Error shutting down worker thread: ", e);
         }
     }
 }

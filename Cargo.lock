@@ -24,7 +24,6 @@ checksum = "d4d7d63395147b81a9e570bcc6243aaf71c017bd666d4909cfef0085bdda8d73"
 [[package]]
 name = "arch"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "arch_gen",
@@ -44,7 +43,6 @@ dependencies = [
 [[package]]
 name = "arch_gen"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 
 [[package]]
 name = "atty"
@@ -66,7 +64,6 @@ checksum = "cf1de2fe8c75bc145a2f577add951f8134889b4795d47466a54a5c846d691693"
 [[package]]
 name = "block_util"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "io-uring",
  "libc",
@@ -113,7 +110,6 @@ dependencies = [
 [[package]]
 name = "devices"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "bitflags",
@@ -143,7 +139,6 @@ dependencies = [
 [[package]]
 name = "event_monitor"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "libc",
  "serde",
@@ -163,7 +158,6 @@ dependencies = [
 [[package]]
 name = "hypervisor"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "epoll",
@@ -235,9 +229,9 @@ checksum = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 
 [[package]]
 name = "libc"
-version = "0.2.90"
+version = "0.2.91"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba4aede83fc3617411dc6993bc8c70919750c1c257c6ca6a502aed6e0e2394ae"
+checksum = "8916b1f6ca17130ec6568feccee27c156ad12037880833a3b842a823236502e7"
 
 [[package]]
 name = "linux-loader"
@@ -268,7 +262,6 @@ dependencies = [
 [[package]]
 name = "net_gen"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "vmm-sys-util",
 ]
@@ -276,7 +269,6 @@ dependencies = [
 [[package]]
 name = "net_util"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "epoll",
  "libc",
@@ -292,12 +284,10 @@ dependencies = [
 [[package]]
 name = "option_parser"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 
 [[package]]
 name = "pci"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "byteorder",
@@ -328,7 +318,6 @@ dependencies = [
 [[package]]
 name = "qcow"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "byteorder",
  "libc",
@@ -373,9 +362,9 @@ dependencies = [
 
 [[package]]
 name = "serde"
-version = "1.0.124"
+version = "1.0.125"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd761ff957cb2a45fbb9ab3da6512de9de55872866160b23c25f1a841e99d29f"
+checksum = "558dc50e1a5a5fa7112ca2ce4effcb321b0300c0d4ccf0776a9f60cd89031171"
 
 [[package]]
 name = "serde_derive"
@@ -535,7 +524,6 @@ dependencies = [
 [[package]]
 name = "vhost_user_backend"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "epoll",
  "libc",
@@ -575,7 +563,6 @@ checksum = "3ff512178285488516ed85f15b5d0113a7cdb89e9e8a760b269ae4f02b84bd6b"
 [[package]]
 name = "virtio-devices"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "arc-swap",
@@ -606,7 +593,6 @@ dependencies = [
 [[package]]
 name = "vm-allocator"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "arch",
  "libc",
@@ -616,7 +602,6 @@ dependencies = [
 [[package]]
 name = "vm-device"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "serde",
@@ -642,7 +627,6 @@ dependencies = [
 [[package]]
 name = "vm-migration"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "serde",
@@ -655,7 +639,6 @@ dependencies = [
 [[package]]
 name = "vm-virtio"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "log",
  "serde",
@@ -668,7 +651,6 @@ dependencies = [
 [[package]]
 name = "vmm"
 version = "0.1.0"
-source = "git+https://github.com/cloud-hypervisor/cloud-hypervisor.git#1e11e6789ac8788b5700450584b4f367843b87bf"
 dependencies = [
  "anyhow",
  "arc-swap",
